@@ -1,0 +1,26 @@
+import discord
+from password import gen_pass
+from game2 import money
+# Переменная intents - хранит привилегии бота
+intents = discord.Intents.default()
+# Включаем привелегию на чтение сообщений
+intents.message_content = True
+# Создаем бота в переменной client и передаем все привелегии
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('список команд'):
+        await message.channel.send("команды:сложи числа (складывает 2 числа),подбрось монетку(подбрасывает монету и говорит что выпало орёл или решка),пароль(генерирует пароль длинной в 8 символов.)")
+    elif message.content.startswith('сложи числа'):
+     await message.channel.send(money) 
+    elif message.content.startswith('пароль'):   
+        await message.channel.send(gen_pass(8))
+
+client.run("MTIwMDc5NDcwMjQxMzMwNzk5Ng.GDNxsq.bFyOSl1wGAeRWrnHG9wZMAjdSmsyiLOn2Lw1UM")
